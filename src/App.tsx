@@ -1,6 +1,6 @@
 import React from 'react';
 
-function App(_props: any) {
+function App() {
   return (
     <div className="todoapp stack-large">
       <h1>TodoMatic</h1>
