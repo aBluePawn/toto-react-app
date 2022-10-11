@@ -1,4 +1,12 @@
-export default function Todo(props: {name: string, completed: boolean, id: string, toggleTasksCompleted: (id: string) => void}){
+export default function Todo(
+  props: {
+    name: string,
+    completed: boolean,
+    id: string,
+    toggleTasksCompleted: (id: string) => void
+    deleteTask: (id: string) => void
+  })
+  {
   return (
     <li className="todo stack-small">
     <div className="c-cb">
@@ -16,7 +24,7 @@ export default function Todo(props: {name: string, completed: boolean, id: strin
       <button type="button" className="btn">
         Edit <span className="visually-hidden">{props.name}</span>
       </button>
-      <button type="button" className="btn btn__danger">
+      <button type="button" className="btn btn__danger" onClick={() => props.deleteTask(props.id)}>
         Delete <span className="visually-hidden">{props.name}</span>
       </button>
     </div>
