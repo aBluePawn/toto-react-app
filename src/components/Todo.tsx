@@ -1,8 +1,21 @@
-export default function Todo(props: {name: string, completed: boolean, id: string}){
+export default function Todo(
+  props: {
+    name: string,
+    completed: boolean,
+    id: string,
+    toggleTasksCompleted: (id: string) => void
+    deleteTask: (id: string) => void
+  })
+  {
   return (
     <li className="todo stack-small">
     <div className="c-cb">
-      <input id={props.id} type="checkbox" defaultChecked={props.completed} />
+      <input
+        id={props.id}
+        type="checkbox"
+        defaultChecked={props.completed}
+        onChange={() => props.toggleTasksCompleted(props.id)}
+      />
       <label className="todo-label" htmlFor={props.id}>
         {props.name}
       </label>
@@ -11,7 +24,7 @@ export default function Todo(props: {name: string, completed: boolean, id: strin
       <button type="button" className="btn">
         Edit <span className="visually-hidden">{props.name}</span>
       </button>
-      <button type="button" className="btn btn__danger">
+      <button type="button" className="btn btn__danger" onClick={() => props.deleteTask(props.id)}>
         Delete <span className="visually-hidden">{props.name}</span>
       </button>
     </div>
