@@ -8,13 +8,13 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-export interface TodoData {
+export interface Task {
   id: string,
   name: string,
   completed: boolean
 }
 
-const DATA: TodoData[] = [
+const DATA: Task[] = [
   {id: "todo-0", name: "Eat", completed: true},
   {id: "todo-1", name: "Sleep", completed: false},
   {id: "todo-2", name: "Repeat", completed: false}

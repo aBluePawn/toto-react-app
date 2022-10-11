@@ -1,17 +1,35 @@
-import React from 'react';
-import { TodoData } from '.';
+import React, { useState } from 'react';
+import { v4 as uuid } from 'uuid';
+import { Task } from '.';
 import { FilterButton } from './components/FilterButton';
 import { Form } from './components/Form';
 import Todo from './components/Todo';
 
-function App(props: {tasks: TodoData[]}) {
-  const taskList = props.tasks.map((task) => 
+function App(props: {tasks: Task[]}) {
+  // Initialize the state when we initialize the App
+  const [tasks, setTasks] = useState(props.tasks);
+
+  const taskList = tasks.map((task) => 
   <Todo id={task.id} name={task.name} completed={task.completed} key={task.id}/>
   );
+
+  /**
+   * Callback prop
+   * Pass the information from the child component to the parent component
+   * @param name 
+   */
+  function addTask(name: string){
+    const newTask: Task = {
+      id: uuid(),
+      name,
+      completed: false,
+    }
+    setTasks([...tasks, newTask]);
+  }
   return (
     <div className="todoapp stack-large">
       <h1>TodoMatic</h1>
-      <Form />
+      <Form addTask={addTask}/>
       <div className="filters btn-group stack-exception">
         <FilterButton name='All'/>
         <FilterButton name='Active'/>
