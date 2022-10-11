@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { v4 as uuid } from 'uuid';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -11,13 +12,13 @@ const root = ReactDOM.createRoot(
 export interface Task {
   id: string,
   name: string,
-  completed: boolean
+  completed: boolean,
 }
 
 const DATA: Task[] = [
-  {id: "todo-0", name: "Eat", completed: true},
-  {id: "todo-1", name: "Sleep", completed: false},
-  {id: "todo-2", name: "Repeat", completed: false}
+  {id: uuid() , name: "Eat", completed: true},
+  {id: uuid() , name: "Sleep", completed: false},
+  {id: uuid() , name: "Repeat", completed: false}
 ]
 root.render(
   <React.StrictMode>

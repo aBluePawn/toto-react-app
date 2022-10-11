@@ -9,8 +9,24 @@ function App(props: {tasks: Task[]}) {
   // Initialize the state when we initialize the App
   const [tasks, setTasks] = useState(props.tasks);
 
+  function toggleTasksCompleted(id: string) {
+    const updatedTasks = tasks.map((task) => {
+      if(id === task.id){
+        return {...task, completed: !task.completed}
+      }
+      return task;
+    });
+    setTasks(updatedTasks);
+  }
+
   const taskList = tasks.map((task) => 
-  <Todo id={task.id} name={task.name} completed={task.completed} key={task.id}/>
+  <Todo
+    id={task.id}
+    name={task.name}
+    completed={task.completed}
+    key={task.id}
+    toggleTasksCompleted={toggleTasksCompleted}
+  />
   );
 
   /**
@@ -26,6 +42,10 @@ function App(props: {tasks: Task[]}) {
     }
     setTasks([...tasks, newTask]);
   }
+
+  const tasksNoun = taskList.length !== 1 ? 'tasks' : 'task';
+  const headingText = `${taskList.length} ${tasksNoun} remaining`;
+
   return (
     <div className="todoapp stack-large">
       <h1>TodoMatic</h1>
@@ -36,7 +56,7 @@ function App(props: {tasks: Task[]}) {
         <FilterButton name='Completed'/>
       </div>
       <h2 id="list-heading">
-        3 tasks remaining
+        {headingText}
       </h2>
       <ul
         className="todo-list stack-large stack-exception"

@@ -1,8 +1,13 @@
-export default function Todo(props: {name: string, completed: boolean, id: string}){
+export default function Todo(props: {name: string, completed: boolean, id: string, toggleTasksCompleted: (id: string) => void}){
   return (
     <li className="todo stack-small">
     <div className="c-cb">
-      <input id={props.id} type="checkbox" defaultChecked={props.completed} />
+      <input
+        id={props.id}
+        type="checkbox"
+        defaultChecked={props.completed}
+        onChange={() => props.toggleTasksCompleted(props.id)}
+      />
       <label className="todo-label" htmlFor={props.id}>
         {props.name}
       </label>
