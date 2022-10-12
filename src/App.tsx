@@ -9,13 +9,23 @@ function App(props: {tasks: Task[]}) {
   // Initialize the state when we initialize the App
   const [tasks, setTasks] = useState(props.tasks);
 
-  function toggleTasksCompleted(id: string) {
+  function toggleTaskCompleted(id: string) {
     const updatedTasks = tasks.map((task) => {
       if(id === task.id){
         return {...task, completed: !task.completed}
       }
       return task;
     });
+    setTasks(updatedTasks);
+  }
+
+  function editTask(id: string, newName: string){
+    const updatedTasks = tasks.map((task) => {
+      if(id === task.id){
+        return {...task, name: newName}
+      }
+      return task;
+    })
     setTasks(updatedTasks);
   }
 
@@ -30,8 +40,9 @@ function App(props: {tasks: Task[]}) {
     name={task.name}
     completed={task.completed}
     key={task.id}
-    toggleTasksCompleted={toggleTasksCompleted}
+    toggleTaskCompleted={toggleTaskCompleted}
     deleteTask={deleteTask}
+    editTask={editTask}
   />
   );
 
