@@ -1,4 +1,12 @@
-import { ChangeEvent, FormEvent, useState } from "react"
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react"
+
+function usePrevious <T>(value: T): T | undefined {
+  const ref = useRef<T>();
+  useEffect(() => {
+    ref.current = value;
+  })
+  return ref.current;
+}
 
 export default function Todo(
   props: {
@@ -12,6 +20,11 @@ export default function Todo(
   {
     const [isEditing, setEditing] = useState(false);
     const [newName, setNewName] = useState('');
+
+    const editFieldRef = useRef<HTMLInputElement>(null);
+    const editButtonRef = useRef<HTMLButtonElement>(null);
+
+    const wasEditing = usePrevious(isEditing);
 
     function handleChange(e: ChangeEvent<HTMLInputElement>){
       setNewName(e.target.value);
@@ -38,6 +51,7 @@ export default function Todo(
               className="todo-text"
               type="text"
               onChange={handleChange}
+              ref={editFieldRef}
           />
         </div>
         <div className="btn-group">
@@ -74,6 +88,7 @@ export default function Todo(
                type="button"
                className="btn"
                onClick={() => setEditing(true)}
+               ref={editButtonRef}
             >
               Edit <span className="visually-hidden">{props.name}</span>
             </button>
@@ -87,6 +102,13 @@ export default function Todo(
           </div>
       </div>
     );
-    
+  
+    useEffect(() => {
+      if(editFieldRef.current && isEditing && !wasEditing){
+        editFieldRef.current.focus();
+      } else if (editButtonRef.current && wasEditing && !isEditing) {
+        editButtonRef.current.focus();
+      }
+    }, [wasEditing, isEditing])
   return <li className='todo'>{isEditing ? editingTemplate : viewTemplate}</li>;
 }
