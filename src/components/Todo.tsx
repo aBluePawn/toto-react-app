@@ -1,12 +1,5 @@
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react"
-
-function usePrevious <T>(value: T): T | undefined {
-  const ref = useRef<T>();
-  useEffect(() => {
-    ref.current = value;
-  })
-  return ref.current;
-}
+import { usePrevious } from "./React/CustomHooks/usePrevious";
 
 export default function Todo(
   props: {
